@@ -11,6 +11,7 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import fabreveallayout.FABRevealLayout;
 import fabreveallayout.OnRevealChangeListener;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         findViews();
         configureFABReveal();
+        setAlbumImage();
     }
 
     private void findViews() {
@@ -48,6 +50,11 @@ public class MainActivity extends AppCompatActivity {
 
         styleSeekbar(mSongProgress);
     }
+
+    private void setAlbumImage() {
+        mAlbumCoverImage.setImageResource(R.mipmap.dresden_ghost_story);
+    }
+
 
     private void styleSeekbar(SeekBar songProgress) {
         int color = getResources().getColor(R.color.background);
@@ -65,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSecondaryViewAppeared(final FABRevealLayout fabRevealLayout, View secondaryView) {
                 showSecondaryViewItems();
-                prepareBackTransition(fabRevealLayout);
             }
         });
     }
@@ -82,6 +88,29 @@ public class MainActivity extends AppCompatActivity {
         scale(mPrevButton, 150);
         scale(mStopButton, 100);
         scale(mNextButton, 200);
+        setSecondaryViewListeners();
+    }
+
+    private void setSecondaryViewListeners() {
+
+        mPrevButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Previous button pressed.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mStopButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Toast.makeText(getApplicationContext(), "Stop button pressed.", Toast.LENGTH_SHORT).show();
+                mFabRevealLayout.revealMainView();
+            }
+        });
+
+        mNextButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Next button pressed.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void prepareBackTransition(final FABRevealLayout fabRevealLayout) {
